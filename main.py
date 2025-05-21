@@ -13,7 +13,7 @@ clock = pygame.time.Clock
 running = True
 
 window.create_window('test_window', pygame.Vector2(0,0), pygame.Vector2(4, 4))
-window.create_window('test_window2', pygame.Vector2(192,0), pygame.Vector2(2, 5))
+window.create_window('test_window2', pygame.Vector2(192,0), pygame.Vector2(4, 4))
 
 while running:
 

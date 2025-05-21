@@ -17,7 +17,7 @@ class Element:
 
 
 class Window:
-    def __init__(self, name: str, position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles.png', font_atlas: str = 'assets/art/font.png'):
+    def __init__(self, name: str, position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles_default.png', font_atlas: str = 'assets/art/font.png'):
         self.name = name
         self.position = position
         self.size = pygame.Vector2(int(size.x), int(size.y))
@@ -30,7 +30,7 @@ class Window:
     def add_element(self, element: Element):
         if element:
             self.elements.append(element)
-    def tick(self, scale: int, behind_window: bool):
+    def tick(self, scale: int, behind_window: bool, surface: pygame.Surface):
         global prev_mouse_position
         global mouse_position
         mouse_in_window = False
@@ -47,22 +47,29 @@ class Window:
                     caller = inspect.stack()[1]
                     print(f"[WinGrid] Error: Please create windows with the 'create_window()' function, instead of directly using the class. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
                     sys.exit(2)
-            if mouse_position[0] > self.position.x and mouse_position[1] > self.position.y:
-                if mouse_position[0] < self.position.x + (self.size.x * 16 * scale) and mouse_position[1] < self.position.y + (8 * scale):
-                    self.moving_window = True
-                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_SIZEALL)
+                if mouse_position[0] > self.position.x and mouse_position[1] > self.position.y:
+                    if mouse_position[0] < self.position.x + (self.size.x * 16 * scale) and mouse_position[1] < self.position.y + (8 * scale):
+                        self.moving_window = True
+                        self._relative_mouse_position = pygame.mouse.get_pos() - self.position
+                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_SIZEALL)
         else:
             if pygame.BUTTON_LEFT in pygame.mouse.get_just_released():
                 self.moving_window = False
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                try:
+                    del self._relative_mouse_position
+                except AttributeError:
+                    pass
         if self.moving_window:
-            self.position += pygame.Vector2(mouse_position[0] - prev_mouse_position[0], mouse_position[1] - prev_mouse_position[1])
+            self.position = pygame.mouse.get_pos() - self._relative_mouse_position
+        self.position.x = min(max(self.position.x, 0), surface.size[0] - (self.size.x * 16 * scale))
+        self.position.y = min(max(self.position.y, 0), surface.size[1] - (self.size.y * 16 * scale))
         return mouse_in_window
     def render(self, surface: pygame.Surface, scale: int):
         import assets.scripts.render.render_window as render_window
         render_window.render(self, surface, scale)
 
-def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles.png', font_atlas: str = 'assets/art/font.png'):
+def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles_default.png', font_atlas: str = 'assets/art/font.png'):
     if size.x < 2 or size.y < 2:
         caller = inspect.stack()[1]
         print(f"[WinGrid] Error: Window size must be at least 2x2. (line {caller.lineno} in {caller.filename})", file=sys.stderr)
@@ -79,7 +86,7 @@ def tick_windows(surface: pygame.Surface, scale: int):
     behind_window = False
     reversed_windows = reversed(windows)
     for i in reversed_windows:
-        if windows[i].tick(scale, behind_window):
+        if windows[i].tick(scale, behind_window, surface):
             behind_window = True
     for i in windows:
         windows[i].render(surface, scale)

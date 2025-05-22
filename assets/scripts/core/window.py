@@ -63,7 +63,7 @@ class Window:
         if self.moving_window:
             self.position = pygame.mouse.get_pos() - self._relative_mouse_position
         self.position.x = min(max(self.position.x, 0), surface.size[0] - (self.size.x * 16 * scale))
-        self.position.y = min(max(self.position.y, 0), surface.size[1] - (self.size.y * 16 * scale))
+        self.position.y = min(max(self.position.y, 0), surface.size[1] - (8 * scale))
         return mouse_in_window
     def render(self, surface: pygame.Surface, scale: int):
         import assets.scripts.render.render_window as render_window

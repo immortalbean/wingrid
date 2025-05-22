@@ -5,11 +5,12 @@ import assets.scripts.render.atlas as atlas
 
 #atlas.import_atlas(pygame.image.load('assets/art/tiles.png'), open("assets/data/render/art/tiles.json", "r").read())
 #print(open("assets/data/render/art/tiles.json", "r").read())
+
 pygame.init()
 
-screen = pygame.display.set_mode((960, 720), pygame.RESIZABLE)
+screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
-
+pygame.display.set_caption('window testing')
 running = True
 
 window.create_window('test_window', pygame.Vector2(0,0), pygame.Vector2(4, 4))
@@ -23,7 +24,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    screen.fill((255, 255, 255))
+    screen.fill((47, 50, 56))
     window.tick_windows(screen, 4)
     pygame.display.flip()
     clock.tick(60)

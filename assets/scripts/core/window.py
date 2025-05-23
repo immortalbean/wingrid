@@ -19,11 +19,12 @@ class Element:
 class Window:
     def __init__(self, name: str, position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles_default.png', font_atlas: str = 'assets/art/font.png'):
         self.name = name
+        self.caption = ''
         self.position = position
         self.size = pygame.Vector2(int(size.x), int(size.y))
         self.elements = []
-        self.atlas = atlas.import_atlas(pygame.image.load(atlas_path), open("assets/data/render/art/tiles.json", "r").read()) #
-        self.font_atlas = pygame.image.load(font_atlas)
+        self.atlas = atlas.import_atlas(pygame.image.load(atlas_path), open("assets/data/render/art/tiles.json", "r").read())
+        self.font_atlas = atlas.import_atlas(pygame.image.load(font_atlas), open("assets/data/render/art/font.json", "r").read())
         self.bg_surface = pygame.Surface((size.x * 16, size.y * 16), pygame.SRCALPHA, 32).convert_alpha()
         self.surface = pygame.Surface((size.x * 16, size.y * 16), pygame.SRCALPHA, 32).convert_alpha()
         self.moving_window = False
@@ -51,11 +52,11 @@ class Window:
                     if mouse_position[0] < self.position.x + (self.size.x * 16 * scale) and mouse_position[1] < self.position.y + (8 * scale):
                         self.moving_window = True
                         self._relative_mouse_position = pygame.mouse.get_pos() - self.position
-                        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_SIZEALL)
+                        pygame.mouse.set_visible(False)
         else:
             if pygame.BUTTON_LEFT in pygame.mouse.get_just_released():
                 self.moving_window = False
-                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                pygame.mouse.set_visible(True)
                 try:
                     del self._relative_mouse_position
                 except AttributeError:
@@ -90,3 +91,7 @@ def tick_windows(surface: pygame.Surface, scale: int):
             behind_window = True
     for i in windows:
         windows[i].render(surface, scale)
+def set_window_caption(window: str, caption: str, color: tuple = (255, 255, 255)):
+    windows[window].caption = caption
+    import assets.scripts.render.render_window as render_window
+    render_window.bg_render(windows[window], color)

@@ -13,18 +13,19 @@ clock = pygame.time.Clock()
 pygame.display.set_caption('window testing')
 running = True
 
-window.create_window('test_window', pygame.Vector2(0,0), pygame.Vector2(4, 4))
-window.create_window('test_window2', pygame.Vector2(256,0), pygame.Vector2(4, 4), atlas_path='assets/art/tiles_high_contrast.png')
-window.create_window('test_window3', pygame.Vector2(0,256), pygame.Vector2(3, 3), atlas_path='assets/art/tiles_sleek.png')
-window.create_window('test_window4', pygame.Vector2(192,256), pygame.Vector2(3, 4), atlas_path='assets/art/tiles_dark.png')
-window.create_window('test_window5', pygame.Vector2(384,256), pygame.Vector2(3, 4), atlas_path='assets/art/tiles_green.png')
+window.create_window('test_window', pygame.Vector2(64, 64), pygame.Vector2(4, 4))
+window.create_window('test_window2', pygame.Vector2(400, 64), pygame.Vector2(10, 2), atlas_path='assets/art/tiles_high_contrast.png')
+window.create_window('test_window3', pygame.Vector2(400, 400), pygame.Vector2(7, 3), atlas_path='assets/art/tiles_sleek.png')
+window.set_window_caption('test_window', 'Window!', (234, 212, 170))
+window.set_window_caption('test_window2', "I like this window, it\'s cool", (44, 232, 245))
+window.set_window_caption('test_window3', "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", (255, 255, 255))
 
 while running:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    screen.fill((47, 50, 56))
+    screen.fill((38,43,68))
     window.tick_windows(screen, 4)
     pygame.display.flip()
     clock.tick(60)

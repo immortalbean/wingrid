@@ -1,5 +1,5 @@
 import pygame
-import ...render.atlas as atlas
+from ..render import atlas as atlas
 import sys
 import inspect
 
@@ -67,7 +67,7 @@ class Window:
         self.position.y = min(max(self.position.y, 0), surface.size[1] - (8 * scale))
         return mouse_in_window
     def render(self, surface: pygame.Surface, scale: int):
-        import ...render.render_window as render_window
+        from ..render import render_window as render_window
         render_window.render(self, surface, scale)
 
 def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles_default.png', font_atlas: str = 'assets/art/font.png'):
@@ -76,7 +76,7 @@ def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, at
         print(f"[WinGrid] Error: Window size must be at least 2x2. (line {caller.lineno} in {caller.filename})", file=sys.stderr)
         sys.exit(2)
     created_window = Window(name, position, size, atlas_path, font_atlas)
-    import ...render.render_window as render_window
+    from ..render import render_window as render_window
     render_window.bg_render(created_window)
     windows[name] = created_window
 def tick_windows(surface: pygame.Surface, scale: int):
@@ -93,7 +93,7 @@ def tick_windows(surface: pygame.Surface, scale: int):
         windows[i].render(surface, scale)
 def set_window_caption(window_name: str, caption: str, color: tuple = (255, 255, 255)):
     windows[window_name].caption = caption
-    import ...render.render_window as render_window
+    from ..render import render_window as render_window
     render_window.bg_render(windows[window_name], color)
 def get_window(window_name: str):
     if window_name in windows:

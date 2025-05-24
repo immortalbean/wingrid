@@ -1,6 +1,6 @@
 
 import pygame
-import ..core.window as window
+from ..core import window as window
 import math
 pygame.init()
 

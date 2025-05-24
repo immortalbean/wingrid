@@ -20,6 +20,7 @@ while running:
             running = False
     screen.fill((0,0,0))
     wingrid.tick_windows(screen, 4)
+	# Ticks all windows and draws them to the screen. Also scales them to 4x scale.
     pygame.display.flip()
     
     clock.tick(60)

@@ -19,7 +19,7 @@ class Element:
 class Window:
     def __init__(self, name: str, position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles_default.png', font_atlas: str = 'assets/art/font.png'):
         self.name = name
-        self.caption = ''
+        self.caption = name
         self.position = position
         self.size = pygame.Vector2(int(size.x), int(size.y))
         self.elements = []

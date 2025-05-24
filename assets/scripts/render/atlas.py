@@ -1,6 +1,5 @@
 import pygame
 import json
-import os
 pygame.init()
 
 pygame.display.set_mode((480,360))

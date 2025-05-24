@@ -1,7 +1,6 @@
 
 import pygame
-#import assets.scripts.render.atlas as atlas
-import assets.scripts.core.window as window
+import ..core.window as window
 import math
 pygame.init()
 

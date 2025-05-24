@@ -91,13 +91,13 @@ def tick_windows(surface: pygame.Surface, scale: int):
             behind_window = True
     for i in windows:
         windows[i].render(surface, scale)
-def set_window_caption(window: str, caption: str, color: tuple = (255, 255, 255)):
-    windows[window].caption = caption
+def set_window_caption(window_name: str, caption: str, color: tuple = (255, 255, 255)):
+    windows[window_name].caption = caption
     import assets.scripts.render.render_window as render_window
-    render_window.bg_render(windows[window], color)
-def get_window(window: str):
-    if window in windows:
-        return windows[window]
+    render_window.bg_render(windows[window_name], color)
+def get_window(window_name: str):
+    if window_name in windows:
+        return windows[window_name]
     else:
         caller = inspect.stack()[1]
         print(f"[WinGrid] Error: Window does not exist. (line {caller.lineno} in {caller.filename})",file=sys.stderr)

@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: wingrid
+Version: 0.1
+Summary: A grid-based UI/windowing system for Pygame
+Requires-Python: >=3.7
+Dynamic: requires-python
+Dynamic: summary

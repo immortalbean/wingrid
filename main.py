@@ -14,6 +14,8 @@ running = True
 
 window.create_window('test_window01', pygame.Vector2(64, 64), pygame.Vector2(5, 5))
 
+test_window01 = window.get_window('test_window01')
+
 
 while running:
 

@@ -96,4 +96,9 @@ def set_window_caption(window: str, caption: str, color: tuple = (255, 255, 255)
     import assets.scripts.render.render_window as render_window
     render_window.bg_render(windows[window], color)
 def get_window(window: str):
-    return windows[window]
+    if window in windows:
+        return windows[window]
+    else:
+        caller = inspect.stack()[1]
+        print(f"[WinGrid] Error: Window does not exist. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+        sys.exit(2)

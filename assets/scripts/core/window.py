@@ -95,3 +95,5 @@ def set_window_caption(window: str, caption: str, color: tuple = (255, 255, 255)
     windows[window].caption = caption
     import assets.scripts.render.render_window as render_window
     render_window.bg_render(windows[window], color)
+def get_window(window: str):
+    return windows[window]

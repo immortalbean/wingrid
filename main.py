@@ -18,7 +18,7 @@ window.create_window('test_window2', pygame.Vector2(400, 64), pygame.Vector2(10,
 window.create_window('test_window3', pygame.Vector2(400, 400), pygame.Vector2(7, 3), atlas_path='assets/art/tiles_sleek.png')
 window.set_window_caption('test_window', 'Window!', (234, 212, 170))
 window.set_window_caption('test_window2', "I like this window, it\'s cool", (44, 232, 245))
-window.set_window_caption('test_window3', "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", (255, 255, 255))
+window.set_window_caption('test_window3', "2 < 4", (255, 255, 255))
 
 while running:
 
@@ -29,6 +29,7 @@ while running:
     window.tick_windows(screen, 4)
     pygame.display.flip()
     clock.tick(60)
+
     if pygame.K_F11 in pygame.key.get_just_pressed():
         pygame.display.toggle_fullscreen()
 pygame.quit()

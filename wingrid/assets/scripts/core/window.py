@@ -16,8 +16,16 @@ class Element:
 
 
 
-class Window:
+class _Window:
     def __init__(self, name: str, position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles_default.png', font_atlas: str = 'assets/art/font.png'):
+        caller_frame = inspect.stack()[1]
+        caller_filename = caller_frame.filename
+        caller_function = caller_frame.function
+        if caller_function != 'create_window':
+            print(
+                f"[WinGrid] Error: Please create windows with 'create_window()' instead of directly instantiating Window. Called from {caller_filename}:{caller_frame.lineno}",
+                file=sys.stderr)
+            sys.exit(2)
         self.name = name
         self.caption = name
         self.position = position
@@ -87,7 +95,7 @@ def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, at
         caller = inspect.stack()[1]
         print(f"[WinGrid] Error: Window size must be at least 2x2. (line {caller.lineno} in {caller.filename})", file=sys.stderr)
         sys.exit(2)
-    created_window = Window(name, position, size, atlas_path, font_atlas)
+    created_window = _Window(name, position, size, atlas_path, font_atlas)
     from ..render import render_window as render_window
     render_window.bg_render(created_window)
     windows[name] = created_window

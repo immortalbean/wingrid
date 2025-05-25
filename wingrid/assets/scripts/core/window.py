@@ -70,11 +70,16 @@ class Window:
         from ..render import render_window as render_window
         render_window.render(self, surface, scale)
 
-def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles_default.png', font_atlas: str = 'assets/art/font.png'):
+def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles_default.png', font_atlas: str = 'assets/art/font.png', replace=False):
     if name in windows:
-        caller = inspect.stack()[1]
-        print(f"[WinGrid] Error: Window already exists. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
-        sys.exit(2)
+        if replace:
+            destroy_window(name)
+        else:
+            caller = inspect.stack()[1]
+            print(
+                f"[WinGrid] Error: Window already exists. (line {caller.lineno} in {caller.filename}) \n If you intended to replace the existing window, add \"replace=True\n to the arguments."
+            ,file=sys.stderr)
+            sys.exit(2)
     if size.x < 2 or size.y < 2:
         caller = inspect.stack()[1]
         print(f"[WinGrid] Error: Window size must be at least 2x2. (line {caller.lineno} in {caller.filename})", file=sys.stderr)
@@ -107,9 +112,10 @@ def get_window(window_name: str):
         caller = inspect.stack()[1]
         print(f"[WinGrid] Error: Window does not exist. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
         sys.exit(2)
-def destroy_window(window_name: str):
+def destroy_window(window_name: str) -> bool:
     if window_name in windows:
         windows.pop(window_name)
+        return True
     else:
-        caller = inspect.stack()[1]
-        print(f"[WinGrid] Soft Error: Window ({window_name}) does not exist. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+        print(f"[WinGrid] Warning: Window ({window_name}) does not exist.")
+        return False

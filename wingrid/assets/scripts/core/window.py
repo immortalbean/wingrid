@@ -28,6 +28,7 @@ class Window:
         self.bg_surface = pygame.Surface((size.x * 16, size.y * 16), pygame.SRCALPHA, 32).convert_alpha()
         self.surface = pygame.Surface((size.x * 16, size.y * 16), pygame.SRCALPHA, 32).convert_alpha()
         self.moving_window = False
+        self.movable = True
     def add_element(self, element: Element):
         if element:
             self.elements.append(element)
@@ -48,19 +49,21 @@ class Window:
                     caller = inspect.stack()[1]
                     print(f"[WinGrid] Error: Please create windows with the 'create_window()' function, instead of directly using the class. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
                     sys.exit(2)
-                if mouse_position[0] > self.position.x and mouse_position[1] > self.position.y:
-                    if mouse_position[0] < self.position.x + (self.size.x * 16 * scale) and mouse_position[1] < self.position.y + (8 * scale):
-                        self.moving_window = True
-                        self._relative_mouse_position = pygame.mouse.get_pos() - self.position
-                        pygame.mouse.set_visible(False)
+                if self.movable:
+                    if mouse_position[0] > self.position.x and mouse_position[1] > self.position.y:
+                        if mouse_position[0] < self.position.x + (self.size.x * 16 * scale) and mouse_position[1] < self.position.y + (8 * scale):
+                            self.moving_window = True
+                            self._relative_mouse_position = pygame.mouse.get_pos() - self.position
+                            pygame.mouse.set_visible(False)
         else:
             if pygame.BUTTON_LEFT in pygame.mouse.get_just_released():
-                self.moving_window = False
-                pygame.mouse.set_visible(True)
-                try:
-                    del self._relative_mouse_position
-                except AttributeError:
-                    pass
+                if self.moving_window and self.movable:
+                    self.moving_window = False
+                    pygame.mouse.set_visible(True)
+                    try:
+                        del self._relative_mouse_position
+                    except AttributeError:
+                        pass
         if self.moving_window:
             self.position = pygame.mouse.get_pos() - self._relative_mouse_position
         self.position.x = min(max(self.position.x, 0), surface.size[0] - (self.size.x * 16 * scale))
@@ -70,7 +73,7 @@ class Window:
         from ..render import render_window as render_window
         render_window.render(self, surface, scale)
 
-def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles_default.png', font_atlas: str = 'assets/art/font.png', replace=False):
+def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles_default.png', font_atlas: str = 'assets/art/font.png', movable = True,replace=False):
     if name in windows:
         if replace:
             destroy_window(name)

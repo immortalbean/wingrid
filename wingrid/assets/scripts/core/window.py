@@ -2,6 +2,8 @@ import pygame
 from ..render import atlas as atlas
 import sys
 import inspect
+from . import constants
+from . import locate
 
 pygame.init()
 
@@ -16,7 +18,7 @@ class Element:
 
 
 class _Window:
-    def __init__(self, name: str, position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles_default.png', font_atlas: str = 'assets/art/font.png'):
+    def __init__(self, name: str, position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = constants.THEME_TILES_DEFAULT, font_atlas: str = locate.asset_path( 'art', 'font.png')):
         caller_frame = inspect.stack()[1]
         caller_filename = caller_frame.filename
         caller_function = caller_frame.function
@@ -30,8 +32,11 @@ class _Window:
         self.position = position
         self.size = pygame.Vector2(int(size.x), int(size.y))
         self.elements = []
-        self.atlas = atlas.import_atlas(pygame.image.load(atlas_path), open("assets/data/render/art/tiles.json", "r").read())
-        self.font_atlas = atlas.import_atlas(pygame.image.load(font_atlas), open("assets/data/render/art/font.json", "r").read())
+        self.render_args = []
+        if atlas_path in constants.TILE_BLUR_THEMES:
+            self.render_args.append('blur')
+        self.atlas = atlas.import_atlas(pygame.image.load(atlas_path), open(locate.asset_path('data', 'render', 'art', 'tiles.json'), "r").read())
+        self.font_atlas = atlas.import_atlas(pygame.image.load(font_atlas), open(locate.asset_path('data', 'render', 'art', 'font.json'), "r").read())
         self.bg_surface = pygame.Surface((size.x * 16, size.y * 16), pygame.SRCALPHA, 32).convert_alpha()
         self.surface = pygame.Surface((size.x * 16, size.y * 16), pygame.SRCALPHA, 32).convert_alpha()
         self.moving_window = False
@@ -79,7 +84,7 @@ class _Window:
         from ..render import render_window as render_window
         render_window.render(self, surface, scale)
 
-def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles_default.png', font_atlas: str = 'assets/art/font.png', movable = True,replace=False):
+def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = constants.THEME_TILES_DEFAULT, font_atlas: str = locate.asset_path('art', 'font.png'), movable = True,replace=False):
     if name in windows:
         if replace:
             destroy_window(name)

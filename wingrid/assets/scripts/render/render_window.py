@@ -2,17 +2,43 @@
 import pygame
 from ..core import window as window
 import math
+from . import atlas
+from ..core import locate
 pygame.init()
 
-cursor_move = pygame.image.load('assets/art/cursor/move.png')
-
+cursor_move = pygame.image.load(locate.asset_path('art', 'cursor', 'move.png'))
+def blur_surface(surface, scale_factor=1.0):
+    size = surface.get_size()
+    small = pygame.transform.smoothscale(surface, (int(size[0]*scale_factor), int(size[1]*scale_factor)))
+    return pygame.transform.smoothscale(small, size)
 def render(render_window: window._Window, surface: pygame.Surface, scale: int):
-    render_window.surface.fill((0,0,0,0))
+    if 'blur' in render_window.render_args:
+        behind = atlas.crop(surface, pygame.Vector2(math.floor(render_window.position.x / scale) * scale, math.floor(
+            render_window.position.y / scale) * scale), pygame.Vector2(render_window.size.x * scale * 16, render_window.size.y * scale * 16))
+        blurred = blur_surface(behind, 1/scale)
+        surface.blit(blurred, (
+            math.floor(render_window.position.x / scale) * scale, math.floor(render_window.position.y / scale) * scale))
+
+    render_window.surface.fill((0, 0, 0, 0))
     render_window.surface.blit(render_window.bg_surface, (0, 0))
-    surface.blit(pygame.transform.scale_by(render_window.surface, scale), (math.floor(render_window.position.x / scale) * scale,math.floor(render_window.position.y / scale) * scale))
+
+    surface.blit(
+        pygame.transform.scale_by(render_window.surface, scale),
+        (
+            math.floor(render_window.position.x / scale) * scale,
+            math.floor(render_window.position.y / scale) * scale
+        )
+    )
+
     if render_window.moving_window:
         cursor_img = pygame.transform.scale_by(cursor_move, scale)
-        surface.blit(cursor_img, (pygame.mouse.get_pos()[0] - cursor_img.size[0] / 2,pygame.mouse.get_pos()[1] - cursor_img.size[1] / 2))
+        surface.blit(
+            cursor_img,
+            (
+                pygame.mouse.get_pos()[0] - cursor_img.get_width() / 2,
+                pygame.mouse.get_pos()[1] - cursor_img.get_height() / 2
+            )
+        )
 def bg_render(render_window: window._Window, caption_color: tuple = (255, 255, 255)):
     surface = render_window.bg_surface
     surface.fill((0, 0, 0, 0))

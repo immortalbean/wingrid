@@ -96,6 +96,7 @@ def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, at
         print(f"[WinGrid] Error: Window size must be at least 2x2. (line {caller.lineno} in {caller.filename})", file=sys.stderr)
         sys.exit(2)
     created_window = _Window(name, position, size, atlas_path, font_atlas)
+    created_window.movable = movable
     from ..render import render_window as render_window
     render_window.bg_render(created_window)
     windows[name] = created_window

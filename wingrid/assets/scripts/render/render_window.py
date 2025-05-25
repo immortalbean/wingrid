@@ -6,14 +6,14 @@ pygame.init()
 
 cursor_move = pygame.image.load('assets/art/cursor/move.png')
 
-def render(render_window: window.Window, surface: pygame.Surface, scale: int):
+def render(render_window: window._Window, surface: pygame.Surface, scale: int):
     render_window.surface.fill((0,0,0,0))
     render_window.surface.blit(render_window.bg_surface)
     surface.blit(pygame.transform.scale_by(render_window.surface, scale), (math.floor(render_window.position.x / scale) * scale,math.floor(render_window.position.y / scale) * scale))
     if render_window.moving_window:
         cursor_img = pygame.transform.scale_by(cursor_move, scale)
         surface.blit(cursor_img, (pygame.mouse.get_pos()[0] - cursor_img.size[0] / 2,pygame.mouse.get_pos()[1] - cursor_img.size[1] / 2))
-def bg_render(render_window: window.Window, caption_color: tuple = (255, 255, 255)):
+def bg_render(render_window: window._Window, caption_color: tuple = (255, 255, 255)):
     surface = render_window.bg_surface
     surface.fill((0, 0, 0, 0))
 

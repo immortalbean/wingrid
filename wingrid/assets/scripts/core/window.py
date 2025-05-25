@@ -79,6 +79,7 @@ def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, at
     from ..render import render_window as render_window
     render_window.bg_render(created_window)
     windows[name] = created_window
+    return created_window
 def tick_windows(surface: pygame.Surface, scale: int):
     global prev_mouse_position
     global mouse_position
@@ -102,3 +103,6 @@ def get_window(window_name: str):
         caller = inspect.stack()[1]
         print(f"[WinGrid] Error: Window does not exist. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
         sys.exit(2)
+def destroy_window(window_name: str):
+    if window_name in windows:
+        windows.pop(window_name)

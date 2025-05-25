@@ -28,6 +28,9 @@ while running:
 pygame.quit()
 ```
 This creates a window with the pink theme, one of the included themes in WinGrid.
+
+wingrid.tick_windows() also renders the windows to the screen, so make sure to call it after all your render calls.
+
 For more control, you can use this function to give the window a custom caption:
 ``` python
 wingrid.set_window_caption('test', 'Caption!', (255, 255, 255))

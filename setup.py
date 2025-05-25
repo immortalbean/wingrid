@@ -7,5 +7,5 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[],
-    python_requires=">=3.7",
+    python_requires=">=3.13.1",
 )

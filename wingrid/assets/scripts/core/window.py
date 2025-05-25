@@ -7,8 +7,7 @@ pygame.init()
 
 windows = {}
 
-prev_mouse_position = pygame.mouse.get_pos(False)
-mouse_position = pygame.mouse.get_pos(False)
+
 
 class Element:
     def __init__(self, position: pygame.Vector2):
@@ -41,8 +40,7 @@ class _Window:
         if element:
             self.elements.append(element)
     def tick(self, scale: int, behind_window: bool, surface: pygame.Surface):
-        global prev_mouse_position
-        global mouse_position
+        mouse_position = pygame.mouse.get_pos()
         mouse_in_window = False
         if mouse_position[0] > self.position.x and mouse_position[1] > self.position.y:
             if mouse_position[0] < self.position.x + (self.size.x * 16 * scale) and mouse_position[1] < self.position.y + (self.size.y * 16 * scale):
@@ -88,7 +86,7 @@ def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, at
         else:
             caller = inspect.stack()[1]
             print(
-                f"[WinGrid] Error: Window already exists. (line {caller.lineno} in {caller.filename}) \n If you intended to replace the existing window, add \"replace=True\n to the arguments."
+                f"[WinGrid] Error: Window already exists. (line {caller.lineno} in {caller.filename}) \n If you intended to replace the existing window, add \"replace=True\" to the arguments."
             ,file=sys.stderr)
             sys.exit(2)
     if size.x < 2 or size.y < 2:
@@ -102,10 +100,6 @@ def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, at
     windows[name] = created_window
     return created_window
 def tick_windows(surface: pygame.Surface, scale: int):
-    global prev_mouse_position
-    global mouse_position
-    prev_mouse_position = mouse_position
-    mouse_position = pygame.mouse.get_pos()
     behind_window = False
     reversed_windows = reversed(windows)
     for i in reversed_windows:

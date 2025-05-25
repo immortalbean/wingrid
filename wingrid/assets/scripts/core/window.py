@@ -24,7 +24,7 @@ class _Window:
         caller_function = caller_frame.function
         if caller_function != 'create_window':
             print(
-                f"[WinGrid] Error: Please create windows with 'create_window()' instead of directly instantiating Window. Called from {caller_filename}:{caller_frame.lineno}",
+                f"[WinGrid] Error: WOH BUDDY, please create windows with 'create_window()' instead of directly instantiating Window. Called from {caller_filename}:{caller_frame.lineno}",
                 file=sys.stderr)
             sys.exit(2)
         self.name = name
@@ -83,6 +83,8 @@ class _Window:
     def render(self, surface: pygame.Surface, scale: int):
         from ..render import render_window as render_window
         render_window.render(self, surface, scale)
+    def set_theme(self, atlas_path: str = constants.THEME_TILES_DEFAULT):
+        self.atlas = atlas.import_atlas(pygame.image.load(atlas_path),open(locate.asset_path('data', 'render', 'art', 'tiles.json'), "r").read())
 
 def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = constants.THEME_TILES_DEFAULT, font_atlas: str = locate.asset_path('art', 'font.png'), movable = True,replace=False):
     if name in windows:

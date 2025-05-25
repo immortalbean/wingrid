@@ -71,6 +71,10 @@ class Window:
         render_window.render(self, surface, scale)
 
 def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = 'assets/art/tiles_default.png', font_atlas: str = 'assets/art/font.png'):
+    if name in windows:
+        caller = inspect.stack()[1]
+        print(f"[WinGrid] Error: Window already exists. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+        sys.exit(2)
     if size.x < 2 or size.y < 2:
         caller = inspect.stack()[1]
         print(f"[WinGrid] Error: Window size must be at least 2x2. (line {caller.lineno} in {caller.filename})", file=sys.stderr)
@@ -106,3 +110,6 @@ def get_window(window_name: str):
 def destroy_window(window_name: str):
     if window_name in windows:
         windows.pop(window_name)
+    else:
+        caller = inspect.stack()[1]
+        print(f"[WinGrid] Soft Error: Window ({window_name}) does not exist. (line {caller.lineno} in {caller.filename})",file=sys.stderr)

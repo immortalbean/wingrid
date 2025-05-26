@@ -15,6 +15,7 @@ class Element:
     def __init__(self, name: str,position: pygame.Vector2):
         self.name = name
         self.position = position
+        self.parented = False
     def event(self):
         pass
     def tick(self, mouse_position: tuple):
@@ -49,6 +50,11 @@ class _Window:
         self.moving_window = False
         self.movable = True
     def add_element(self, element: Element):
+        if element.parented:
+            caller = inspect.stack()[1]
+            print(f"[WinGrid] Error: Element is already in another window, adding it to this one can cause conflicts. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+            sys.exit(2)
+        element.parented = True
         if element.name in self.elements:
             caller = inspect.stack()[1]
             print(f"[WinGrid] Error: Name already used, please use a unique name. (line {caller.lineno} in {caller.filename})",file=sys.stderr)

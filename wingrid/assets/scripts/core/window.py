@@ -12,10 +12,9 @@ windows = {}
 
 
 class Element:
-    def __init__(self, name: str,position: pygame.Vector2, atlas_path: str = constants.THEME_TILES_DEFAULT):
+    def __init__(self, name: str,position: pygame.Vector2):
         self.name = name
         self.position = position
-        self.atlas = atlas.import_atlas(pygame.image.load(atlas_path), open(locate.asset_path('data', 'render', 'art', 'tiles.json'), "r").read())
     def event(self):
         pass
     def tick(self, mouse_position: tuple):

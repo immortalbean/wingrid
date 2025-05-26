@@ -7,8 +7,8 @@ from . import locate
 from . import window
 
 class Button(window.Element):
-    def __init__(self, name: str,position: pygame.Vector2, size: int, text: str = '', text_color: tuple = (255, 255, 255), atlas_path: str = constants.THEME_TILES_DEFAULT):
-        super().__init__(name, position, atlas_path)
+    def __init__(self, name: str,position: pygame.Vector2, size: int, text: str = '', text_color: tuple = (255, 255, 255)):
+        super().__init__(name, position)
         if size < 2:
             caller = inspect.stack()[1]
             print(f"[WinGrid] Error: Buttons need to be atleast 2 tiles wide. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
@@ -36,15 +36,15 @@ class Button(window.Element):
                 self.event()
             self.pressed = False
 
-    def draw(self, window_surface: pygame.Surface):
+    def draw(self, render_window: window._Window):
         if self.pressed:
-            parts = [self.atlas['button_l_pressed'], self.atlas['button_c_pressed'], self.atlas['button_r_pressed']]
+            parts = [render_window.atlas['button_l_pressed'], render_window.atlas['button_c_pressed'], render_window.atlas['button_r_pressed']]
         else:
-            parts = [self.atlas['button_l'], self.atlas['button_c'], self.atlas['button_r']]
-        window_surface.blit(parts[0], (self.position[0] * 16, self.position[1] * 16))
-        window_surface.blit(parts[2], ((self.size - 1) * 16 + self.position[0] * 16, self.position[1] * 16))
+            parts = [render_window.atlas['button_l'], render_window.atlas['button_c'], render_window.atlas['button_r']]
+        render_window.surface.blit(parts[0], (self.position[0] * 16, self.position[1] * 16))
+        render_window.surface.blit(parts[2], ((self.size - 1) * 16 + self.position[0] * 16, self.position[1] * 16))
         for i in range(1, self.size - 1):
-            window_surface.blit(parts[1], (self.position[0] * 16 + i * 16, self.position[1] * 16))
+            render_window.surface.blit(parts[1], (self.position[0] * 16 + i * 16, self.position[1] * 16))
         pos_x = 0
         for i in self.text:
             letter = i.lower()
@@ -59,8 +59,8 @@ class Button(window.Element):
                     letter_surf = self.font_atlas['missing'].copy()
             if pos_x + 10 > (self.size * 16) - 6:
                 letter_surf = self.font_atlas['...'].copy()
-                window_surface.blit(letter_surf, (6 + pos_x + self.position[0] * 16, 6 + self.position[1] * 16))
+                render_window.surface.blit(letter_surf, (6 + pos_x + self.position[0] * 16, 6 + self.position[1] * 16))
                 break
             if not skip:
-                window_surface.blit(letter_surf, (6 + pos_x + self.position[0] * 16, 6 + self.position[1] * 16))
+                render_window.surface.blit(letter_surf, (6 + pos_x + self.position[0] * 16, 6 + self.position[1] * 16))
             pos_x += 5

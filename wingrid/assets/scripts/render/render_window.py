@@ -21,7 +21,8 @@ def render(render_window: window._Window, surface: pygame.Surface, scale: int):
 
     render_window.surface.fill((0, 0, 0, 0))
     render_window.surface.blit(render_window.bg_surface, (0, 0))
-
+    for i in render_window.elements:
+        render_window.elements[i].draw(render_window.surface)
     surface.blit(
         pygame.transform.scale_by(render_window.surface, scale),
         (

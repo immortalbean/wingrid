@@ -1,6 +1,7 @@
 import pygame
 from .assets.scripts.core.window import *
 from .assets.scripts.core.constants import *
+from .assets.scripts.core.elements import *
 import os
 import sys
 BASEDIR = os.path.dirname(os.path.abspath(__file__))

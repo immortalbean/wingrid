@@ -12,8 +12,16 @@ windows = {}
 
 
 class Element:
-    def __init__(self, position: pygame.Vector2):
+    def __init__(self, name: str,position: pygame.Vector2, atlas_path: str = constants.THEME_TILES_DEFAULT):
+        self.name = name
         self.position = position
+        self.atlas = atlas.import_atlas(pygame.image.load(atlas_path), open(locate.asset_path('data', 'render', 'art', 'tiles.json'), "r").read())
+    def event(self):
+        pass
+    def tick(self, mouse_position: tuple):
+        pass
+    def draw(self, window_surface: pygame.Surface):
+        pass
 
 
 
@@ -24,14 +32,14 @@ class _Window:
         caller_function = caller_frame.function
         if caller_function != 'create_window':
             print(
-                f"[WinGrid] Error: WOH BUDDY, please create windows with 'create_window()' instead of directly instantiating Window. Called from {caller_filename}:{caller_frame.lineno}",
+                f"[WinGrid] Error: WOAH BUDDY, please create windows with 'create_window()' instead of directly instantiating Window. Called from {caller_filename}:{caller_frame.lineno}",
                 file=sys.stderr)
             sys.exit(2)
         self.name = name
         self.caption = name
         self.position = position
         self.size = pygame.Vector2(int(size.x), int(size.y))
-        self.elements = []
+        self.elements = {}
         self.render_args = []
         if atlas_path in constants.TILE_BLUR_THEMES:
             self.render_args.append('blur')
@@ -42,8 +50,13 @@ class _Window:
         self.moving_window = False
         self.movable = True
     def add_element(self, element: Element):
-        if element:
-            self.elements.append(element)
+        if element.name in self.elements:
+            caller = inspect.stack()[1]
+            print(f"[WinGrid] Error: Name already used, please use a unique name. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+            sys.exit(2)
+        else:
+            if element:
+                self.elements[element.name] = element
     def tick(self, scale: int, behind_window: bool, surface: pygame.Surface):
         mouse_position = pygame.mouse.get_pos()
         mouse_in_window = False
@@ -60,12 +73,12 @@ class _Window:
                     caller = inspect.stack()[1]
                     print(f"[WinGrid] Error: Please create windows with the 'create_window()' function, instead of directly using the class. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
                     sys.exit(2)
-                if self.movable:
-                    if mouse_position[0] > self.position.x and mouse_position[1] > self.position.y:
-                        if mouse_position[0] < self.position.x + (self.size.x * 16 * scale) and mouse_position[1] < self.position.y + (8 * scale):
-                            self.moving_window = True
-                            self._relative_mouse_position = pygame.mouse.get_pos() - self.position
-                            pygame.mouse.set_visible(False)
+                if mouse_position[1] < self.position.y + (8 * scale):
+                    if self.movable:
+                        self.moving_window = True
+                        self._relative_mouse_position = pygame.mouse.get_pos() - self.position
+                        pygame.mouse.set_visible(False)
+
         else:
             if pygame.BUTTON_LEFT in pygame.mouse.get_just_released():
                 if self.moving_window and self.movable:
@@ -75,6 +88,9 @@ class _Window:
                         del self._relative_mouse_position
                     except AttributeError:
                         pass
+        if not behind_window:
+            for i in self.elements:
+                self.elements[i].tick(((mouse_position[0] - self.position[0]) / scale, (mouse_position[1] - self.position[1]) / scale))
         if self.moving_window:
             self.position = pygame.mouse.get_pos() - self._relative_mouse_position
         self.position.x = min(max(self.position.x, 0), surface.size[0] - (self.size.x * 16 * scale))
@@ -83,6 +99,7 @@ class _Window:
     def render(self, surface: pygame.Surface, scale: int):
         from ..render import render_window as render_window
         render_window.render(self, surface, scale)
+
     def set_theme(self, atlas_path: str = constants.THEME_TILES_DEFAULT):
         self.atlas = atlas.import_atlas(pygame.image.load(atlas_path),open(locate.asset_path('data', 'render', 'art', 'tiles.json'), "r").read())
 
@@ -108,9 +125,9 @@ def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, at
     return created_window
 def tick_windows(surface: pygame.Surface, scale: int):
     behind_window = False
-    reversed_windows = reversed(windows)
+    reversed_windows = reversed(list(windows.values()))
     for i in reversed_windows:
-        if windows[i].tick(scale, behind_window, surface):
+        if i.tick(scale, behind_window, surface):
             behind_window = True
     for i in windows:
         windows[i].render(surface, scale)

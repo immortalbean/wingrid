@@ -1,4 +1,3 @@
-# WinGrid
 ![WinGrid logo](/images/logo.png)
 
 WinGrid is a grid-based window/gui system built in and for the Pygame framework.

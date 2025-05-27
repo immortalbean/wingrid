@@ -1,4 +1,5 @@
 import pygame
+import copy
 from ..render import atlas as atlas
 import sys
 import inspect
@@ -22,6 +23,10 @@ class Element:
         pass
     def draw(self, window_surface: pygame.Surface):
         pass
+    def clone(self):
+        clone = copy.copy(self)
+        clone.parented = False
+        return clone
 
 
 

@@ -27,6 +27,8 @@ class Element:
         clone = copy.copy(self)
         clone.parented = False
         return clone
+    def __str__(self):
+        return self.name
 
 
 
@@ -54,19 +56,20 @@ class _Window:
         self.surface = pygame.Surface((size.x * 16, size.y * 16), pygame.SRCALPHA, 32).convert_alpha()
         self.moving_window = False
         self.movable = True
-    def add_element(self, element: Element):
-        if element.parented:
-            caller = inspect.stack()[1]
-            print(f"[WinGrid] Error: Element is already in another window, adding it to this one can cause conflicts. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
-            sys.exit(2)
-        element.parented = True
-        if element.name in self.elements:
-            caller = inspect.stack()[1]
-            print(f"[WinGrid] Error: Name already used, please use a unique name. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
-            sys.exit(2)
-        else:
-            if element:
-                self.elements[element.name] = element
+    def add_element(self, *elements: Element):
+        for element in elements:
+            if element.parented:
+                caller = inspect.stack()[1]
+                print(f"[WinGrid] Error: Element is already in another window, adding it to this one can cause conflicts. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+                sys.exit(2)
+            element.parented = True
+            if element.name in self.elements:
+                caller = inspect.stack()[1]
+                print(f"[WinGrid] Error: Name already used, please use a unique name. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+                sys.exit(2)
+            else:
+                if element:
+                    self.elements[element.name] = element
     def tick(self, scale: int, behind_window: bool, surface: pygame.Surface):
         mouse_position = pygame.mouse.get_pos()
         mouse_in_window = False

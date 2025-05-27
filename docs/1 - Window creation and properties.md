@@ -1,6 +1,12 @@
 # Window creation and properties
 
 Despite how quick and easy it is to create and set up a window, WinGrid gives developers a ton of control.
+# wingrid._Window():
+
+The private window class internally used by WinGrid. 
+
+> [!Warning]
+> Any window you create should be instantiated with the create_window() function. Not doing this causes the window to be fully ignored by WinGrid, which causes a lot of problems.
 
 # wingrid.create_window()
 

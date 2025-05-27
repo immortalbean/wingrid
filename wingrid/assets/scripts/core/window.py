@@ -117,7 +117,7 @@ class _Window:
         self.atlas = atlas.import_atlas(pygame.image.load(atlas_path),open(locate.asset_path('data', 'render', 'art', 'tiles.json'), "r").read())
 
 def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = constants.THEME_TILES_DEFAULT,
-                  font_atlas: str = locate.asset_path('art', 'font.png'), movable: bool = True,replace: bool = False,caption: str = '',caption_color: tuple = (255, 255, 255)):
+                  font_atlas: str = locate.asset_path('art', 'font.png'), movable: bool = True,replace: bool = False,caption: str = '',caption_color: tuple[int, int, int] = (255, 255, 255)):
     if name in windows:
         if replace:
             destroy_window(name)
@@ -149,7 +149,7 @@ def tick_windows(surface: pygame.Surface, scale: int):
             behind_window = True
     for i in windows:
         windows[i].render(surface, scale)
-def set_window_caption(window_name: str, caption: str, color: tuple = (255, 255, 255)):
+def set_window_caption(window_name: str, caption: str, color: tuple[int, int, int] = (255, 255, 255)):
     if window_name in windows:
         windows[window_name].caption = caption
         from ..render import render_window as render_window

@@ -46,7 +46,7 @@ Destroys/deletes a window.
 
 **Parameters:**
 
-	window_name: str - The window you wish to destroy/delete.
+- window_name: str - The window you wish to destroy/delete.
 
 **Returns:**
 

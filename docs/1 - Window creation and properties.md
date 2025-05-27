@@ -22,7 +22,7 @@ Creates a window and properly instantiates it.
 - movable: bool - (Optional) Whether the window is movable or not, helpful for animating the window through code.
 - replace: bool - (Optional) If you input a window with the same name as another, adding replace will replace it instead of causing an error.
 - caption: str - (Optional) The window's caption, without this it default's to the window's name.
-- caption_color: tuple - (Optional) The color of the window's caption.
+- caption_color: tuple[int, int, int] - (Optional) The color of the window's caption.
 
 **Returns:**
 
@@ -40,7 +40,7 @@ Sets a window's caption.
 
 - window_name: str - The identifying string name that each window is given.
 - caption: str - The caption (text on the 'top-bar') that the window will be given.
-- caption_color: tuple - (Optional) The color of the caption, by default this is white (255, 255, 255)
+- caption_color: tuple[int, int, int] - (Optional) The color of the caption, by default this is white (255, 255, 255)
 
 **Returns:**
 

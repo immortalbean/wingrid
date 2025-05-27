@@ -2,7 +2,7 @@
 import pygame
 from ..core import window as window
 import math
-from . import atlas
+from . import atlas as atls
 from ..core import locate
 pygame.init()
 
@@ -13,7 +13,7 @@ def blur_surface(surface, scale_factor=1.0):
     return pygame.transform.smoothscale(small, size)
 def render(render_window: window._Window, surface: pygame.Surface, scale: int):
     if 'blur' in render_window.render_args:
-        behind = atlas.crop(surface, pygame.Vector2(math.floor(render_window.position.x / scale) * scale, math.floor(
+        behind = atls.crop(surface, pygame.Vector2(math.floor(render_window.position.x / scale) * scale, math.floor(
             render_window.position.y / scale) * scale), pygame.Vector2(render_window.size.x * scale * 16, render_window.size.y * scale * 16))
         blurred = blur_surface(behind, 1/scale)
         surface.blit(blurred, (

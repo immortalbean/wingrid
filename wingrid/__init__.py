@@ -5,4 +5,5 @@ from .assets.scripts.core.elements import *
 import os
 import sys
 BASEDIR = os.path.dirname(os.path.abspath(__file__))
-print('WinGrid v0.1 - Python 3.13.1 \nDocs: https://github.com/immortalbean/wingrid/tree/main/docs')
+ver = 0.1
+print(f"Welcome to WinGrid - v{ver} - (Pygame {pygame.ver}) \nDocs: https://github.com/immortalbean/wingrid/tree/main/docs")

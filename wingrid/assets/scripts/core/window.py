@@ -41,7 +41,7 @@ class _Window:
                 file=sys.stderr)
             sys.exit(2)
         self.name = name
-        self.caption = name
+        self.caption = ''
         self.position = position
         self.size = pygame.Vector2(int(size.x), int(size.y))
         self.elements = {}
@@ -113,7 +113,8 @@ class _Window:
     def set_theme(self, atlas_path: str = constants.THEME_TILES_DEFAULT):
         self.atlas = atlas.import_atlas(pygame.image.load(atlas_path),open(locate.asset_path('data', 'render', 'art', 'tiles.json'), "r").read())
 
-def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = constants.THEME_TILES_DEFAULT, font_atlas: str = locate.asset_path('art', 'font.png'), movable = True,replace=False):
+def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = constants.THEME_TILES_DEFAULT,
+                  font_atlas: str = locate.asset_path('art', 'font.png'), movable: bool = True,replace: bool = False,caption: str = '',caption_color: tuple = (255, 255, 255)):
     if name in windows:
         if replace:
             destroy_window(name)
@@ -128,9 +129,13 @@ def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, at
         print(f"[WinGrid] Error: Window size must be at least 2x2. (line {caller.lineno} in {caller.filename})", file=sys.stderr)
         sys.exit(2)
     created_window = _Window(name, position, size, atlas_path, font_atlas)
+    if caption:
+        created_window.caption = caption
+    else:
+        created_window.caption = name
     created_window.movable = movable
-    from ..render import render_window as render_window
-    render_window.bg_render(created_window)
+    from ..render import render_window
+    render_window.bg_render(created_window, caption_color)
     windows[name] = created_window
     return created_window
 def tick_windows(surface: pygame.Surface, scale: int):
@@ -142,9 +147,14 @@ def tick_windows(surface: pygame.Surface, scale: int):
     for i in windows:
         windows[i].render(surface, scale)
 def set_window_caption(window_name: str, caption: str, color: tuple = (255, 255, 255)):
-    windows[window_name].caption = caption
-    from ..render import render_window as render_window
-    render_window.bg_render(windows[window_name], color)
+    if window_name in windows:
+        windows[window_name].caption = caption
+        from ..render import render_window as render_window
+        render_window.bg_render(windows[window_name], color)
+    else:
+        caller = inspect.stack()[1]
+        print(f"[WinGrid] Error: Window does not exist. (line {caller.lineno} in {caller.filename})", file=sys.stderr)
+        sys.exit(2)
 def get_window(window_name: str):
     if window_name in windows:
         return windows[window_name]

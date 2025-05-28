@@ -17,6 +17,7 @@ class Element:
         self.name = name
         self.position = position
         self.parented = False
+        self.size = 1
     def event(self):
         pass
     def tick(self, mouse_position: tuple):
@@ -61,6 +62,10 @@ class _Window:
             if element.parented:
                 caller = inspect.stack()[1]
                 print(f"[WinGrid] Error: Element is already in another window, adding it to this one can cause conflicts. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+                sys.exit(2)
+            if element.position[0] < 0 or element.size + int(element.position[0]) > self.size[0] or element.position[1] < 1 or self.size[1] <= element.position[1]:
+                caller = inspect.stack()[1]
+                print(f"[WinGrid] Error: Element is out of window's bounds. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
                 sys.exit(2)
             element.parented = True
             if element.name in self.elements:

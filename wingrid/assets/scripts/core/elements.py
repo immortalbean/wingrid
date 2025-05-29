@@ -20,6 +20,7 @@ class Button(window.Element):
         self.size = size
         self.text = text
         self.pressed = False
+        self.is_mouse_over = False
     def check_mouse_inside(self, mouse_position: tuple):
         if (self.position[0] * 16 + 3) < mouse_position[0] < (self.position[0] * 16 - 3 + self.size * 16):
             if (self.position[1] * 16 + 3) < mouse_position[1] < (self.position[1] * 16 + 13):
@@ -28,13 +29,15 @@ class Button(window.Element):
                 return False
         else:
             return False
-    def pressed(self):
-        is_mouse_over = self.check_mouse_inside(mouse_position)
-        self.pressed = pygame.BUTTON_LEFT in pygame.mouse.get_pressed() and is_mouse_over
     def tick(self, mouse_position: tuple):
-        pass
+        self.is_mouse_over = self.check_mouse_inside(mouse_position)
+        if pygame.BUTTON_LEFT in pygame.mouse.get_just_pressed():
+            if self.is_mouse_over:
+                self.pressed = True
+        if pygame.BUTTON_LEFT in pygame.mouse.get_just_released():
+            self.pressed = False
     def just_pressed(self):
-        return self.pressed and pygame.BUTTON_LEFT in pygame.mouse.get_just_released()
+        return self.pressed and pygame.BUTTON_LEFT in pygame.mouse.get_just_pressed()
     def draw(self, render_window: window._Window):
         if self.pressed:
             parts = [render_window.atlas['button_l_pressed'], render_window.atlas['button_c_pressed'], render_window.atlas['button_r_pressed']]

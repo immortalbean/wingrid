@@ -120,6 +120,8 @@ class _Window:
 
     def set_theme(self, atlas_path: str = constants.THEME_TILES_DEFAULT):
         self.atlas = atlas.import_atlas(pygame.image.load(atlas_path),open(locate.asset_path('data', 'render', 'art', 'tiles.json'), "r").read())
+        from ..render import render_window as render_window
+        render_window.bg_render(self)
 
 def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = constants.THEME_TILES_DEFAULT,
                   font_atlas: str = locate.asset_path('art', 'font.png'), movable: bool = True,replace: bool = False,caption: str = '',caption_color: tuple[int, int, int] = (255, 255, 255)):

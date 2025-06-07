@@ -1,4 +1,6 @@
 # Quickstart
+WinGrid is nearly plug and play. However, it requires the Pygame-ce library, this is a modification of the popular library *Pygame* which has extra features used by WinGrid.
+
 For a simple 4x4 window, run this code:
 ``` python
 import pygame

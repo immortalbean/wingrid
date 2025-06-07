@@ -27,11 +27,11 @@ Creates a window and properly instantiates it.
 
 **Returns:**
 
-	The window instance, however this is only useful in very specific instances.
+>The window instance, however this is only useful in very specific instances.
 	
 **Return type:**
 
-	wingrid._Window - The private window class.
+>wingrid._Window - The internal window class, used to control **default** window behaviour.
 
 # wingrid.set_window_caption()
 
@@ -45,7 +45,7 @@ Sets a window's caption.
 
 **Returns:**
 
-	None.
+>None.
 
 # wingrid.destroy_window()
 
@@ -57,11 +57,11 @@ Destroys/deletes a window.
 
 **Returns:**
 
-	A boolean that states whether the window existed or not. If not, WinGrid raises a soft error (warning).
+>A boolean that states whether the window existed or not. If not, WinGrid raises a soft error (warning) to prevent possible crashes.
 	
 **Return type:**
 
-	boolean
+>boolean
 
 # wingrid._Window.set_theme()
 
@@ -69,11 +69,11 @@ Allows you to set the window's tile atlas after it was created.
 
 **Parameters:**
 
-- atlas_path: str - (Optional) The path of the window's atlas, usually one of the theme constants. Defaults to the default window theme.
+- atlas_path: str - (Optional) The path of the window's atlas, usually one of the theme constants. Falls back to the default window theme.
 
 **Returns:**
 
-	None.
+>None.
 	
 # Theme constants
 The pre-included themes that WinGrid has by default. These include:

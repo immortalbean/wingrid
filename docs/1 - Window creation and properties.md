@@ -22,7 +22,7 @@ Creates a window and properly instantiates it.
 - font_atlas: str - (Optional) The location of the window's font atlas.
 - movable: bool - (Optional) Whether the window is movable or not, helpful for animating the window through code.
 - replace: bool - (Optional) If you input a window with the same name as another, adding replace will replace it instead of causing an error.
-- caption: str - (Optional) The window's caption, without this it default's to the window's name.
+- caption: str - (Optional) The window's caption, without this it defaults to the window's name.
 - caption_color: tuple[int, int, int] - (Optional) The color of the window's caption.
 
 **Returns:**

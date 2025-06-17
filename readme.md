@@ -14,6 +14,7 @@ WinGrid is a minimal-dependency, free-to-use, low-bloat framework built for Pyga
 
 Here are some other reasons for using WinGrid:
 * 13 built-in window themes
+* Light-weight (less than 100KB)
 * Plug-n-play functionality
 * Minimal boiler-plate code
 * Easy integration into other projects

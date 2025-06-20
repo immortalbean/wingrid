@@ -67,7 +67,7 @@ class Button(window.Element):
                 render_window.surface.blit(letter_surf, (6 + pos_x + self.position[0] * 16, 6 + self.position[1] * 16))
             pos_x += 5
 class Slider(window.Element):
-    def __init__(self, name, pos, length_tiles, slider_range: tuple[float, float] = (0.0, 1.0)):
+    def __init__(self, name: str, pos: pygame.Vector2, length_tiles: int, slider_range: tuple[float, float] = (0.0, 1.0)):
         super().__init__(name, pos)
         self.size = length_tiles
         self._value = 0.5

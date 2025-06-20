@@ -13,5 +13,10 @@
 	"button_r": {"x": 80, "y": 0, "w": 16, "h": 16},
 	"button_l_pressed": {"x": 64, "y": 48, "w": 16, "h": 16},
 	"button_c_pressed": {"x": 80, "y": 48, "w": 16, "h": 16},
-	"button_r_pressed": {"x": 96, "y": 48, "w": 16, "h": 16}
+	"button_r_pressed": {"x": 96, "y": 48, "w": 16, "h": 16},
+	"slider_l": {"x": 96, "y": 0, "w": 16, "h": 16},
+	"slider_c": {"x": 108, "y": 0, "w": 16, "h": 16},
+	"slider_seperate": {"x": 48, "y": 16, "w": 16, "h": 16},
+	"slider_r": {"x": 64, "y": 16, "w": 16, "h": 16},
+	"slider_knob": {"x": 80, "y": 16, "w": 16, "h": 16}
 }

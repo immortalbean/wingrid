@@ -21,4 +21,5 @@ THEME_TILES_PAPER = asset_path('tiles_paper.png')
 THEME_TILES_CUBED = asset_path('tiles_cubed.png')
 THEME_TILES_GLASS = asset_path('tiles_glass.png')
 THEME_TILES_GRASS = asset_path('tiles_grass.png')
+THEME_TILES_GRID_TEST = asset_path('grid_test.png')
 TILE_BLUR_THEMES = [THEME_TILES_GLASS]

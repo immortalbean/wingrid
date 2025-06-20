@@ -34,6 +34,7 @@ class Button(window.Element):
         if pygame.BUTTON_LEFT in pygame.mouse.get_just_pressed():
             if self.is_mouse_over:
                 self.pressed = True
+                self.event()
         if pygame.BUTTON_LEFT in pygame.mouse.get_just_released():
             self.pressed = False
     def just_pressed(self):

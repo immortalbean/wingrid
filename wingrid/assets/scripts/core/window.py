@@ -24,9 +24,13 @@ class Element:
         pass
     def draw(self, window_surface: pygame.Surface):
         pass
-    def clone(self):
+    def clone(self, name: str = ""):
         clone = copy.copy(self)
         clone.parented = False
+        if name:
+            clone.name = name
+        else:
+            clone.name = clone.name + "(2)"
         return clone
     def __str__(self):
         return self.name

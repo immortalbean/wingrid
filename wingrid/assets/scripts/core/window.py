@@ -17,7 +17,7 @@ class Element:
         self.name = name
         self.position = position
         self.parented = False
-        self.size = 1
+        self.size = pygame.Vector2(1,1)
     def event(self):
         pass
     def tick(self, mouse_position: tuple):

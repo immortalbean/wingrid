@@ -17,7 +17,7 @@ class Button(window.Element):
         raw_font_atlas.fill(text_color, special_flags=pygame.BLEND_MULT)
         self.font_atlas = atlas.import_atlas(raw_font_atlas,
         open(locate.asset_path('data', 'render', 'art', 'font.json'), "r").read())
-        self.size = size
+        self.size[0] = size
         self.text = text
         self.pressed = False
         self.is_mouse_over = False
@@ -70,7 +70,7 @@ class Button(window.Element):
 class Slider(window.Element):
     def __init__(self, name: str, pos: pygame.Vector2, length_tiles: int, slider_range: tuple[float, float] = (0.0, 1.0)):
         super().__init__(name, pos)
-        self.size = length_tiles
+        self.size[0] = length_tiles
         self._value = 0.5
         self.dragging = False
         self.range = slider_range
@@ -147,3 +147,6 @@ class Slider(window.Element):
             pos_x += 5
     def get_value(self):
         return self.range[0] + self._value * (self.range[1] - self.range[0])
+class InternalSurface(window.Element):
+    def __init__(self, name: str, position: pygame.Vector2, size: pygame.Vector2 = pygame.Vector2(2,2)):
+        super().__init__(name, position)

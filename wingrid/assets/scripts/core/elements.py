@@ -158,4 +158,20 @@ class InternalSurface(window.Element):
         self.surface = pygame.Surface((size.x * 16 - 8, size.y * 16 - 8))
     def draw(self, render_window: window._Window):
         render_window.surface.blit(self.surface, (self.position[0] * 16 + 4, self.position[1] * 16 + 4))
-        
+
+        atlas = render_window.atlas
+
+        w, h = int(self.size.x), int(self.size.y)
+
+        render_window.surface.blit(atlas['blank_frame_tl'], (self.position[0] * 16, self.position[1] * 16))
+        render_window.surface.blit(atlas['blank_frame_tr'], ((w - 1) * 16 + self.position[0] * 16, self.position[1] * 16))
+        render_window.surface.blit(atlas['blank_frame_bl'], (self.position[0] * 16, (h - 1) * 16 + self.position[1] * 16))
+        render_window.surface.blit(atlas['blank_frame_br'], ((w - 1) * 16 + self.position[0] * 16, (h - 1) * 16 + self.position[1] * 16))
+
+        for x in range(1, w - 1):
+            render_window.surface.blit(atlas['blank_frame_tc'], (x * 16 + self.position[0] * 16, self.position[1] * 16))
+            render_window.surface.blit(atlas['blank_frame_bc'], (x * 16 + self.position[0] * 16, (h - 1) * 16 + self.position[1] * 16))
+
+        for y in range(1, h - 1):
+            render_window.surface.blit(atlas['blank_frame_cl'], (self.position[0] * 16, y * 16 + self.position[1] * 16))
+            render_window.surface.blit(atlas['blank_frame_cr'], ((w - 1) * 16 + self.position[0] * 16, y * 16 + self.position[1] * 16))

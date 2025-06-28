@@ -156,5 +156,6 @@ class InternalSurface(window.Element):
             sys.exit(2)
         self.size = size
         self.surface = pygame.Surface((size.x * 16 - 8, size.y * 16 - 8))
-    def draw(self, window_surface: pygame.Surface):
-        window_surface.blit(self.surface, (self.position[0] * 16 + 4, self.position[1] * 16 + 4))
+    def draw(self, render_window: window._Window):
+        render_window.surface.blit(self.surface, (self.position[0] * 16 + 4, self.position[1] * 16 + 4))
+        

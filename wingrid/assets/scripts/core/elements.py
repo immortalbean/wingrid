@@ -78,7 +78,7 @@ class Slider(window.Element):
     def tick(self, mouse_position):
         mx, my = mouse_position
         tile_px = 16
-        track_tiles = self.size - 3
+        track_tiles = self.size[0] - 3
         track_length = track_tiles * tile_px + 16
         track_start_x = (self.position.x + 1) * tile_px - 8
         track_y = self.position.y * tile_px + tile_px // 2
@@ -108,7 +108,7 @@ class Slider(window.Element):
 
         surface.blit(render_window.atlas["slider_l"], (x, y))
 
-        track_tiles = self.size - 3
+        track_tiles = int(self.size[0] - 3)
         for i in range(track_tiles):
             surface.blit(render_window.atlas["slider_c"], (x + tile_px * (i + 1), y))
 
@@ -150,3 +150,11 @@ class Slider(window.Element):
 class InternalSurface(window.Element):
     def __init__(self, name: str, position: pygame.Vector2, size: pygame.Vector2 = pygame.Vector2(2,2)):
         super().__init__(name, position)
+        if min(size.x, size.y) < 2:
+            caller = inspect.stack()[1]
+            print(f"[WinGrid] Error: Internal Surfaces must have a size of atleast 2x2. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+            sys.exit(2)
+        self.size = size
+        self.surface = pygame.Surface((size.x * 16 - 8, size.y * 16 - 8))
+    def draw(self, window_surface: pygame.Surface):
+        window_surface.blit(self.surface, (self.position[0] * 16 + 4, self.position[1] * 16 + 4))

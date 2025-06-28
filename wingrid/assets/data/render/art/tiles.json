@@ -8,15 +8,27 @@
 	"bg_bl": {"x":0,"y":32,"w":16,"h":16},
 	"bg_bc": {"x":16,"y":32,"w":16,"h":16},
 	"bg_br": {"x":32,"y":32,"w":16,"h":16},
+
 	"button_l": {"x": 48, "y": 0, "w": 16, "h": 16},
 	"button_c": {"x": 64, "y": 0, "w": 16, "h": 16},
 	"button_r": {"x": 80, "y": 0, "w": 16, "h": 16},
+
 	"button_l_pressed": {"x": 64, "y": 48, "w": 16, "h": 16},
 	"button_c_pressed": {"x": 80, "y": 48, "w": 16, "h": 16},
 	"button_r_pressed": {"x": 96, "y": 48, "w": 16, "h": 16},
+
 	"slider_l": {"x": 96, "y": 0, "w": 16, "h": 16},
 	"slider_c": {"x": 108, "y": 0, "w": 16, "h": 16},
 	"slider_seperate": {"x": 48, "y": 16, "w": 16, "h": 16},
 	"slider_r": {"x": 64, "y": 16, "w": 16, "h": 16},
-	"slider_knob": {"x": 80, "y": 16, "w": 16, "h": 16}
+	"slider_knob": {"x": 80, "y": 16, "w": 16, "h": 16},
+
+	"blank_frame_tl": {"x":0,"y":64,"w":16,"h":16},
+	"blank_frame_tc": {"x":16,"y":64,"w":16,"h":16},
+	"blank_frame_tr": {"x":32,"y":64,"w":16,"h":16},
+	"blank_frame_cl": {"x":48,"y":64,"w":16,"h":16},
+	"blank_frame_cr": {"x":64,"y":64,"w":16,"h":16},
+	"blank_frame_bl": {"x":80,"y":64,"w":16,"h":16},
+	"blank_frame_bc": {"x":96,"y":64,"w":16,"h":16},
+	"blank_frame_br": {"x":112,"y":64,"w":16,"h":16}
 }

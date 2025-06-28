@@ -79,6 +79,13 @@ class _Window:
             else:
                 if element:
                     self.elements[element.name] = element
+    def get_element(self, element: str):
+        if element in self.elements:
+            return self.elements[element]
+        else:
+            caller = inspect.stack()[1]
+            print(f"[WinGrid] Warning: Element {element} does not exist. Check your code for typos or inconsistencies. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+            return None
     def tick(self, scale: int, behind_window: bool, surface: pygame.Surface):
         mouse_position = pygame.mouse.get_pos()
         mouse_in_window = False

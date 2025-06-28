@@ -22,7 +22,8 @@ class Button(window.Element):
         self.pressed = False
         self.is_mouse_over = False
     def check_mouse_inside(self, mouse_position: tuple):
-        if (self.position[0] * 16 + 3) < mouse_position[0] < (self.position[0] * 16 - 3 + self.size * 16):
+        size = int(self.size[0])
+        if (self.position[0] * 16 + 3) < mouse_position[0] < (self.position[0] * 16 - 3 + size * 16):
             if (self.position[1] * 16 + 3) < mouse_position[1] < (self.position[1] * 16 + 13):
                 return True
             else:
@@ -40,13 +41,14 @@ class Button(window.Element):
     def just_pressed(self):
         return self.pressed and pygame.BUTTON_LEFT in pygame.mouse.get_just_pressed()
     def draw(self, render_window: window._Window):
+        size = int(self.size[0])
         if self.pressed:
             parts = [render_window.atlas['button_l_pressed'], render_window.atlas['button_c_pressed'], render_window.atlas['button_r_pressed']]
         else:
             parts = [render_window.atlas['button_l'], render_window.atlas['button_c'], render_window.atlas['button_r']]
         render_window.surface.blit(parts[0], (self.position[0] * 16, self.position[1] * 16))
-        render_window.surface.blit(parts[2], ((self.size - 1) * 16 + self.position[0] * 16, self.position[1] * 16))
-        for i in range(1, self.size - 1):
+        render_window.surface.blit(parts[2], ((size - 1) * 16 + self.position[0] * 16, self.position[1] * 16))
+        for i in range(1, size - 1):
             render_window.surface.blit(parts[1], (self.position[0] * 16 + i * 16, self.position[1] * 16))
         pos_x = 0
         for i in self.text:
@@ -60,7 +62,7 @@ class Button(window.Element):
                     letter_surf = self.font_atlas['missing'].copy()
                 else:
                     letter_surf = self.font_atlas['missing'].copy()
-            if pos_x + 10 > (self.size * 16) - 6:
+            if pos_x + 10 > (size * 16) - 6:
                 letter_surf = self.font_atlas['...'].copy()
                 render_window.surface.blit(letter_surf, (6 + pos_x + self.position[0] * 16, 6 + self.position[1] * 16))
                 break

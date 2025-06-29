@@ -17,7 +17,9 @@ def render(render_window: window._Window, surface: pygame.Surface, scale: int):
             render_window.position.y / scale) * scale), pygame.Vector2(render_window.size.x * scale * 16, render_window.size.y * scale * 16))
         blurred = blur_surface(behind, 1/scale)
         surface.blit(blurred, (
-            math.floor(render_window.position.x / scale) * scale, math.floor(render_window.position.y / scale) * scale))
+            math.floor(render_window.position.x / scale) * scale,
+            math.floor(render_window.position.y / scale) * scale
+        ))
 
     render_window.surface.fill((0, 0, 0, 0))
     render_window.surface.blit(render_window.bg_surface, (0, 0))
@@ -36,8 +38,8 @@ def render(render_window: window._Window, surface: pygame.Surface, scale: int):
         surface.blit(
             cursor_img,
             (
-                pygame.mouse.get_pos()[0] - cursor_img.get_width() / 2,
-                pygame.mouse.get_pos()[1] - cursor_img.get_height() / 2
+                math.floor((pygame.mouse.get_pos()[0] - cursor_img.get_width() / 2) / scale) * scale,
+                math.floor((pygame.mouse.get_pos()[1] - cursor_img.get_height() / 2) / scale) * scale
             )
         )
 def bg_render(render_window: window._Window, caption_color: tuple = (255, 255, 255)):

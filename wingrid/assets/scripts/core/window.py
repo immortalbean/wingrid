@@ -30,7 +30,7 @@ class Element:
         if name:
             clone.name = name
         else:
-            clone.name = clone.name + "(2)"
+            clone.name = clone.name + "2"
         return clone
     def __str__(self):
         return self.name

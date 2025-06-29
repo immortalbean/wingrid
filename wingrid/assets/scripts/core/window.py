@@ -135,7 +135,7 @@ class _Window:
         render_window.bg_render(render_window=self, caption_color=caption_color)
 
 def create_window(name: str,  position: pygame.Vector2, size: pygame.Vector2, atlas_path: str = constants.THEME_TILES_DEFAULT,
-                  font_atlas: str = locate.asset_path('art', 'font.png'), movable: bool = True,replace: bool = False,caption: str = '',caption_color: tuple[int, int, int] = (255, 255, 255)):
+font_atlas: str = locate.asset_path('art', 'font.png'), movable: bool = True,replace: bool = False,caption: str = '',caption_color: tuple[int, int, int] = (255, 255, 255)):
     if name in windows:
         if replace:
             destroy_window(name)

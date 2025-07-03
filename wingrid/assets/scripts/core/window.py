@@ -71,14 +71,14 @@ class _Window:
             #    caller = inspect.stack()[1]
             #    print(f"[WinGrid] Error: Element is out of window's bounds. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
             #    sys.exit(2)
-            element.parented = True
-            if element.name in self.elements:
+            elif element.name in self.elements:
                 caller = inspect.stack()[1]
                 print(f"[WinGrid] Error: Name already used, please use a unique name or make sure element isn't already in that window. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
                 sys.exit(2)
             else:
                 if element:
                     self.elements[element.name] = element
+            element.parented = True
     def get_element(self, element: str):
         if element in self.elements:
             return self.elements[element]

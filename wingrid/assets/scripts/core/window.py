@@ -74,7 +74,7 @@ class _Window:
             element.parented = True
             if element.name in self.elements:
                 caller = inspect.stack()[1]
-                print(f"[WinGrid] Error: Name already used, please use a unique name. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+                print(f"[WinGrid] Error: Name already used, please use a unique name or make sure element isn't already in that window. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
                 sys.exit(2)
             else:
                 if element:

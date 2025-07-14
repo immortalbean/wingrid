@@ -27,7 +27,7 @@ Creates a window and properly instantiates it.
 
 **Returns:**
 
->The window instance, however this is only useful in very specific instances.
+>The window instance, however this is only useful in very specific instances, such as adding elements to a window.
 	
 **Return type:**
 

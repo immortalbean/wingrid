@@ -7,7 +7,7 @@ Despite how quick and easy it is to create and set up a window, WinGrid gives de
 The private window class internally used by WinGrid. This class contains all information stored by a window, like its position, size, and elements.
 
 > [!Warning]
-> Any window you create should be instantiated with the create_window() function. Not doing this causes the window to be fully ignored by WinGrid, which causes a lot of problems.
+> Any window you create should be instantiated with the create_window() function, unless you know what you're doing. Not doing this causes the window to be fully ignored by WinGrid.
 
 # wingrid.create_window()
 
@@ -27,7 +27,7 @@ Creates a window and properly instantiates it.
 
 **Returns:**
 
->The window instance, however this is only useful in very specific instances, such as adding elements to a window.
+>The window instance, however this is only useful in very specific instances, such as adding elements to a window or changing its theme.
 	
 **Return type:**
 

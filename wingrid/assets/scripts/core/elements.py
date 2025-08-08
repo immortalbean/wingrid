@@ -11,7 +11,7 @@ class Button(window.Element):
         super().__init__(name, position)
         if size < 2:
             caller = inspect.stack()[1]
-            print(f"[WinGrid] Error: Buttons need to be atleast 2 tiles wide. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+            print(f"[WinGrid e-c 11] Error: Buttons need to be atleast 2 tiles wide. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
             sys.exit(2)
         raw_font_atlas = pygame.image.load(locate.asset_path( 'art', 'font.png'))
         raw_font_atlas.fill(text_color, special_flags=pygame.BLEND_MULT)
@@ -154,7 +154,7 @@ class InternalSurface(window.Element):
         super().__init__(name, position)
         if min(size.x, size.y) < 2:
             caller = inspect.stack()[1]
-            print(f"[WinGrid] Error: Internal Surfaces must have a size of atleast 2x2. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+            print(f"[WinGrid e-c 12] Error: Internal Surfaces must have a size of atleast 2x2. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
             sys.exit(2)
         self.size = size
         self.surface = pygame.Surface((size.x * 16 - 8, size.y * 16 - 8))

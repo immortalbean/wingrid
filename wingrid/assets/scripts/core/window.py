@@ -44,7 +44,7 @@ class _Window:
         caller_function = caller_frame.function
         if caller_function != 'create_window':
             print(
-                f"[WinGrid e-c 1] Error: WOAH BUDDY, please create windows with 'create_window()' instead of directly instantiating Window. Called from {caller_filename}:{caller_frame.lineno}",
+                f"[WinGrid error 001] Error: WOAH BUDDY, please create windows with 'create_window()' instead of directly instantiating Window. Called from {caller_filename}:{caller_frame.lineno}",
                 file=sys.stderr)
             sys.exit(2)
         self.name = name
@@ -65,7 +65,7 @@ class _Window:
         for element in elements: # So that I don't have to desipher this again, it loops over the added elements, not the ones already in the window.
             if element.parented:
                 caller = inspect.stack()[1]
-                print(f"[WinGrid e-c 2] Error: Element is already in another window, adding it to this one can cause conflicts. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+                print(f"[WinGrid error 002] Error: Element is already in another window, adding it to this one can cause conflicts. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
                 sys.exit(2)
             #if element.position[0] < 0 or element.size[0] + int(element.position[0]) > self.size[0] or element.position[1] < 1 or self.size[1] < element.position[1]:
             #    caller = inspect.stack()[1]
@@ -73,7 +73,7 @@ class _Window:
             #    sys.exit(2)
             elif element.name in self.elements:
                 caller = inspect.stack()[1]
-                print(f"[WinGrid e-c 3] Error: Name already used, please use a unique name or make sure element isn't already in that window. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+                print(f"[WinGrid error 003] Error: Name already used, please use a unique name or make sure element isn't already in that window. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
                 sys.exit(2)
             else:
                 if element:
@@ -84,7 +84,7 @@ class _Window:
             return self.elements[element]
         else:
             caller = inspect.stack()[1]
-            print(f"[WinGrid e-c 4] Warning: Element {element} does not exist. Check your code for typos or inconsistencies. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+            print(f"[WinGrid error 004] Warning: Element {element} does not exist. Check your code for typos or inconsistencies. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
             return None
     def tick(self, scale: int, behind_window: bool, surface: pygame.Surface):
         mouse_position = pygame.mouse.get_pos()
@@ -100,7 +100,7 @@ class _Window:
                     windows[self.name] = item
                 else:
                     caller = inspect.stack()[1]
-                    print(f"[WinGrid e-c 5] Error: Please create windows with the 'create_window()' function, instead of directly using the class. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+                    print(f"[WinGrid error 005] Error: Please create windows with the 'create_window()' function, instead of directly using the class. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
                     sys.exit(2)
                 if mouse_position[1] < self.position.y + (8 * scale):
                     if self.movable:
@@ -142,12 +142,12 @@ font_atlas: str = locate.asset_path('art', 'font.png'), movable: bool = True,rep
         else:
             caller = inspect.stack()[1]
             print(
-                f"[WinGrid e-c 6] Error: Window already exists. (line {caller.lineno} in {caller.filename}) \n If you intended to replace the existing window, add \"replace=True\" to the arguments."
+                f"[WinGrid error 006] Error: Window already exists. (line {caller.lineno} in {caller.filename}) \n If you intended to replace the existing window, add \"replace=True\" to the arguments."
             ,file=sys.stderr)
             sys.exit(2)
     if size.x < 2 or size.y < 2:
         caller = inspect.stack()[1]
-        print(f"[WinGrid e-c 7] Error: Window size must be at least 2x2. (line {caller.lineno} in {caller.filename})", file=sys.stderr)
+        print(f"[WinGrid error 007] Error: Window size must be at least 2x2. (line {caller.lineno} in {caller.filename})", file=sys.stderr)
         sys.exit(2)
     created_window = _Window(name, position, size, atlas_path, font_atlas)
     if caption:
@@ -174,19 +174,19 @@ def set_window_caption(window_name: str, caption: str, color: tuple[int, int, in
         render_window.bg_render(windows[window_name], color)
     else:
         caller = inspect.stack()[1]
-        print(f"[WinGrid e-c 8] Error: Window does not exist. (line {caller.lineno} in {caller.filename})", file=sys.stderr)
+        print(f"[WinGrid error 008] Error: Window does not exist. (line {caller.lineno} in {caller.filename})", file=sys.stderr)
         sys.exit(2)
 def get_window(window_name: str):
     if window_name in windows:
         return windows[window_name]
     else:
         caller = inspect.stack()[1]
-        print(f"[WinGrid e-c 9] Error: Window does not exist. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
+        print(f"[WinGrid error 009] Error: Window does not exist. (line {caller.lineno} in {caller.filename})",file=sys.stderr)
         sys.exit(2)
 def destroy_window(window_name: str) -> bool:
     if window_name in windows:
         windows.pop(window_name)
         return True
     else:
-        print(f"[WinGrid e-c 10] Warning: Window ({window_name}) does not exist.")
+        print(f"[WinGrid error 010] Warning: Window ({window_name}) does not exist.")
         return False

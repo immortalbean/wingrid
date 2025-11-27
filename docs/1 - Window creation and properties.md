@@ -27,11 +27,11 @@ Creates a window and properly instantiates it.
 
 **Returns:**
 
->The window instance, however this is only useful in very specific instances, such as adding elements to a window or changing its theme.
+>The window instance, required to be able to add elements to the window.
 	
 **Return type:**
 
->wingrid._Window - The internal window class, used to control **default** window behaviour.
+>wingrid._Window - The internal window class, used to control default window behaviour.
 
 # wingrid.set_window_caption()
 
@@ -40,7 +40,7 @@ Sets a window's caption.
 **Parameters:**
 
 - window_name: str - The identifying string name that each window is given.
-- caption: str - The caption (text on the 'top-bar') that the window will be given.
+- caption: str - The caption (text on the top bar) that the window will be given.
 - caption_color: tuple[int, int, int] - (Optional) The color of the caption, by default this is white (255, 255, 255)
 
 **Returns:**
@@ -50,14 +50,16 @@ Sets a window's caption.
 # wingrid.destroy_window()
 
 Destroys/deletes a window.
+> [!Warning]
+> Does not guarantee that all references to the window are destroyed
 
 **Parameters:**
 
-- window_name: str - The window you wish to destroy/delete.
+- window_name: str - The identifying string name that each window is given.
 
 **Returns:**
 
->A boolean that states whether the window existed or not. If not, WinGrid raises a soft error (warning) to prevent possible crashes.
+>A boolean that states whether the window was successfully destroyed. If not, WinGrid raises a soft error (warning) to prevent possible crashes.
 	
 **Return type:**
 
@@ -74,7 +76,53 @@ Allows you to set the window's tile atlas after it was created.
 **Returns:**
 
 >None.
-	
+
+# wingrid._Window.add_element()
+
+Adds an element to a window.
+
+**Parameters:**
+
+- element: wingrid.Element - The element you wish to add to the window, cannot be added to another window already.
+
+**Returns:**
+
+>None.
+ 
+# wingrid._Window.get_element()
+
+Gets the instance of a specific element within a window.
+
+**Parameters:**
+
+- element: str - The name of the element.
+
+**Returns:**
+
+>The element associated with the string name.
+ 
+**Return type:**
+
+>wingrid.Element - The basic element class used by WinGrid
+
+# wingrid._Window.remove_element()
+
+Removes an element from a window and returns the element.
+> [!Warning]
+> Does not guarantee that all references to the element are destroyed
+
+**Parameters:**
+
+- element: str - The name of the element.
+
+**Returns:**
+
+> A reference to the removed element.
+
+**Return type:**
+
+> wingrid.Element - The basic element class used by WinGrid
+
 # Theme constants
 The pre-included themes that WinGrid has by default. These include:
 - Default - callable with wingrid.THEME_TILES_DEFAULT

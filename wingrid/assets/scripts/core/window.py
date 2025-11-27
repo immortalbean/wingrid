@@ -86,7 +86,9 @@ class _Window:
             return None
     def remove_element(self, element: str):
         if element in self.elements:
-            return self.elements.pop(element)
+            element_temp = self.elements.pop(element)
+            element_temp.parented = False
+            return element_temp
         else:
             caller = inspect.stack()[1]
             print(f"[WinGrid error 004] Warning: Element {element} does not exist. Check your code for typos or inconsistencies. (line {caller.lineno} in {caller.filename})",file=sys.stderr)

@@ -1,7 +1,4 @@
 # Window creation and properties
-
-Despite how quick and easy it is to create and set up a window, WinGrid gives developers a ton of control.
-
 # wingrid._Window():
 
 The private window class internally used by WinGrid. This class contains all information stored by a window, like its position, size, and elements.

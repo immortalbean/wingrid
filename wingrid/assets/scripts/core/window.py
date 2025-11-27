@@ -20,7 +20,7 @@ class Element:
         pass
     def tick(self, mouse_position: tuple):
         pass
-    def draw(self, window_surface: pygame.Surface):
+    def draw(self, render_window):
         pass
     def clone(self, name: str = ""):
         clone = copy.copy(self)

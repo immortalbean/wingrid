@@ -10,8 +10,6 @@ pygame.init()
 
 windows = {}
 
-
-
 class Element:
     def __init__(self, name: str,position: pygame.Vector2):
         self.name = name
@@ -53,8 +51,8 @@ class _Window:
         self.size = pygame.Vector2(int(size.x), int(size.y))
         self.elements = {}
         self.render_args = []
-        if atlas_path in constants.TILE_BLUR_THEMES:
-            self.render_args.append('blur')
+        if atlas_path in constants.DEFAULT_THEME_ARGS:
+            self.render_args.append(constants.DEFAULT_THEME_ARGS[atlas_path])
         self.atlas = atlas.import_atlas(pygame.image.load(atlas_path), open(locate.asset_path('data', 'render', 'art', 'tiles.json'), "r").read())
         self.font_atlas = atlas.import_atlas(pygame.image.load(font_atlas), open(locate.asset_path('data', 'render', 'art', 'font.json'), "r").read())
         self.bg_surface = pygame.Surface((size.x * 16, size.y * 16), pygame.SRCALPHA, 32).convert_alpha()
